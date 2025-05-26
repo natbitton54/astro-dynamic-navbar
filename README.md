@@ -37,4 +37,5 @@ const links = [
 ## 📦 Installation
 
 ```bash
-npm install astro-dynamic-navbar
+npm install @natbitton54/astro-dynamic-navbar
+
