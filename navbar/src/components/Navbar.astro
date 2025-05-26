@@ -99,6 +99,17 @@ const { logoSrc, brandName, links = [] } = Astro.props;
       color 0.3s;
   }
 
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+  }
+
   html.dark {
     background-color: var(--bg-dark);
     color: var(--text-dark);
