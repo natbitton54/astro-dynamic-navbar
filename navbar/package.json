@@ -1,6 +1,6 @@
 {
   "name": "@natbitton54/astro-dynamic-navbar",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "description": "A modern, responsive, dark-mode-ready navbar component for Astro.",
   "main": "./src/components/Navbar.astro",
   "exports": {
