@@ -1,0 +1,25 @@
+{
+  "name": "@natbitton54/astro-dynamic-navbar",
+  "version": "0.0.2",
+  "description": "A modern, responsive, dark-mode-ready navbar component for Astro.",
+  "main": "./src/components/Navbar.astro",
+  "exports": {
+    ".": {
+      "astro": "./src/components/Navbar.astro"
+    }
+  },
+  "files": [
+    "src/components/Navbar.astro",
+    "README.md"
+  ],
+  "type": "module",
+  "author": "Nathaniel Bitton",
+  "license": "MIT",
+  "keywords": [
+    "astro",
+    "navbar",
+    "dark mode",
+    "responsive",
+    "component"
+  ]
+}

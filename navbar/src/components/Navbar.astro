@@ -1,0 +1,223 @@
+---
+const { logoSrc, brandName, links = [] } = Astro.props;
+---
+
+<nav class="navbar">
+  <div class="left">
+    <a href="/" class="brand-link">
+      {logoSrc && <img src={logoSrc} alt="Logo" class="logo" />}
+      <span class="brand">{brandName}</span>
+    </a>
+
+    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+      <svg
+        id="icon-sun"
+        xmlns="http://www.w3.org/2000/svg"
+        class="icon"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          d="M12 4V2M12 22v-2M4.22 4.22l-1.42 1.42M20.48 20.48l-1.42-1.42M2 12H4m16 0h2M4.22 19.78l1.42-1.42M19.78 4.22l-1.42 1.42M12 6a6 6 0 100 12 6 6 0 000-12z"
+        ></path>
+      </svg>
+      <svg
+        id="icon-moon"
+        xmlns="http://www.w3.org/2000/svg"
+        class="icon hidden"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path d="M21 12.79A9 9 0 1111.21 3a7 7 0 109.79 9.79z"></path>
+      </svg>
+    </button>
+  </div>
+
+  <div class="hamburger" id="hamburger">☰</div>
+
+  <ul class="right" id="nav-links">
+    {
+      links.map((link: { href: string; text: string }) => (
+        <li>
+          <a href={link.href}>{link.text}</a>
+        </li>
+      ))
+    }
+  </ul>
+</nav>
+
+<script>
+  if (typeof window !== "undefined") {
+    window.addEventListener("DOMContentLoaded", () => {
+      const burger = document.getElementById("hamburger");
+      const nav = document.getElementById("nav-links");
+      const toggle = document.getElementById("theme-toggle");
+      const sun = document.getElementById("icon-sun");
+      const moon = document.getElementById("icon-moon");
+
+      if (!localStorage.getItem("theme")) {
+        document.documentElement.classList.add("dark");
+        localStorage.setItem("theme", "dark");
+        sun?.classList.add("hidden");
+        moon?.classList.remove("hidden");
+      } else {
+        const isDark = localStorage.getItem("theme") === "dark";
+        document.documentElement.classList.toggle("dark", isDark);
+        sun?.classList.toggle("hidden", isDark);
+        moon?.classList.toggle("hidden", !isDark);
+      }
+
+      toggle?.addEventListener("click", () => {
+        const isDarkNow = document.documentElement.classList.toggle("dark");
+        localStorage.setItem("theme", isDarkNow ? "dark" : "light");
+        sun?.classList.toggle("hidden", isDarkNow);
+        moon?.classList.toggle("hidden", !isDarkNow);
+      });
+
+      burger?.addEventListener("click", () => {
+        nav?.classList.toggle("open");
+        burger.textContent = nav?.classList.contains("open") ? "✖" : "☰";
+      });
+    });
+  }
+</script>
+
+<style>
+  :root {
+    --bg-light: #ffffff;
+    --bg-dark: #111111;
+    --text-light: #111111;
+    --text-dark: #f5f5f5;
+    --hover-color: #3b82f6;
+  }
+
+  html {
+    transition:
+      background 0.3s,
+      color 0.3s;
+  }
+
+  html.dark {
+    background-color: var(--bg-dark);
+    color: var(--text-dark);
+  }
+
+  .navbar {
+    height: 64px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--bg-light);
+    color: var(--text-light);
+    padding: 0 1.5rem;
+    border-bottom: 1px solid #e5e7eb;
+    flex-wrap: wrap;
+    transition:
+      background-color 0.3s,
+      color 0.3s;
+  }
+
+  html.dark .navbar {
+    background-color: var(--bg-dark);
+    color: var(--text-dark);
+    border-bottom: 1px solid #333;
+  }
+
+  .left {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .brand-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .logo {
+    height: 32px;
+    width: 32px;
+  }
+
+  .brand {
+    font-size: 1.25rem;
+    font-weight: 600;
+  }
+
+  .hamburger {
+    display: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+    margin-left: 1rem;
+  }
+
+  .right-group {
+    display: flex;
+    align-items: center;
+  }
+
+  .theme-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 2.3rem;
+    padding: 0.5rem;
+    scale: 1.2;
+    color: inherit;
+  }
+
+  .icon {
+    width: 20px;
+    height: 20px;
+    stroke-width: 2;
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  .right {
+    display: flex;
+    gap: 1.5rem;
+    list-style: none;
+  }
+
+  .right a {
+    text-decoration: none;
+    color: inherit;
+    font-weight: 500;
+    transition: color 0.2s ease;
+  }
+
+  .right a:hover {
+    color: var(--hover-color);
+  }
+
+  @media (max-width: 768px) {
+    .hamburger {
+      display: block;
+    }
+
+    .right {
+      display: none;
+      flex-direction: column;
+      width: 100%;
+      margin-top: 1rem;
+      align-items: center;
+    }
+
+    .right.open {
+      display: flex;
+    }
+
+    .right li {
+      width: 100%;
+      text-align: center;
+    }
+  }
+</style>
